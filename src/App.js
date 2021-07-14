@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import CreateNote from './components/CreateNote';
+import CreateUser from './components/CreateUser';
+import Navigate from './components/Navigate';
+import NotesList from './components/NotesList';
+import { ChakraProvider } from '@chakra-ui/react';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider>
+      <Router>
+        <Navigate />
+        <Route exact path='/' component={NotesList} />
+        <Route exact path='/edit/:id' component={CreateNote} />
+        <Route exact path='/create' component={CreateNote} />
+        <Route exact path='/user' component={CreateUser} />
+      </Router>
+    </ChakraProvider>
   );
 }
 
