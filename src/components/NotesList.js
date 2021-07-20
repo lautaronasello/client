@@ -3,35 +3,70 @@ import {
   Container,
   Heading,
   SimpleGrid,
-  Text,
   VStack,
   CircularProgress,
+  Text,
+  Center,
+  useToast,
 } from '@chakra-ui/react';
+import { fs, db } from '../index';
+
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { FaGoogle } from 'react-icons/fa';
 export default function NotesList() {
-  const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState();
+  const toast = useToast();
+  useEffect(() => {
+    fs.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        setUserId(user.uid);
+      }
+    });
+  }, [userId]);
 
   useEffect(() => {
-    let cancel;
-    const getNotes = async () => {
-      const res = await axios.get(
-        'https://mernbacknasello.herokuapp.com/api/notes/',
-        {
-          cancelToken: new axios.CancelToken((c) => (cancel = c)),
-        }
-      );
-      setNotes(res.data);
-    };
-    getNotes();
-    setLoading(false);
-    return () => cancel;
-  }, [notes]);
+    db.collection(`${userId}`)
+      .orderBy('creation_date', 'desc')
+      .onSnapshot((querySnapshot) => {
+        var toArray = [];
+        querySnapshot.forEach((doc) => {
+          toArray.push(doc.data());
+        });
+        setNotes(toArray);
+        setLoading(false);
+      });
+  }, [userId]);
 
-  var deleteNote = async (id) => {
-    await axios.delete(`https://mernbacknasello.herokuapp.com/api/notes/${id}`);
+  var handleDelete = (doc) => {
+    db.collection(`${userId}`)
+      .doc(doc)
+      .delete()
+      .then(() => {
+        toast({
+          title: 'Note deleted.',
+          description: 'Note deleted successfully',
+          status: 'warning',
+          duration: 9000,
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        console.error('Error removing document: ', error);
+      });
   };
+
+  const [notes, setNotes] = useState([]);
+
+  if (userId === undefined)
+    return (
+      <Center minH='80vh'>
+        Connect your google account to start writing notes
+        <Box mx='1rem'> {<FaGoogle />}</Box>
+      </Center>
+    );
 
   if (loading)
     return (
@@ -39,39 +74,66 @@ export default function NotesList() {
         <CircularProgress isIndeterminate color='gray.300' />
       </Box>
     );
+
+  if (notes.length === 0)
+    return (
+      <>
+        <Heading align='center' mt='2rem'>
+          Notes:
+        </Heading>
+        <Center h='70vh'>
+          <VStack>
+            <Box>Don't have any notes yet </Box>
+            <Box>:'(</Box>
+          </VStack>
+        </Center>
+      </>
+    );
+
   return (
-    <Container align='center' maxW='container.md' mt='2rem'>
+    <Container align='center' maxW='container.lg' mt='2rem' mb='5rem'>
       <VStack spacing='2rem'>
-        <Heading>Notes</Heading>
-        <SimpleGrid columns={3} gap='1rem'>
+        <Heading>Notes:</Heading>
+        <SimpleGrid columns={[1, 3, null, 4]} gap='1rem'>
           {notes &&
             notes.map((data) => {
               return (
-                <Box key={data._id} border='1px' borderColor='gray.300'>
+                <Box
+                  key={data.title}
+                  h='fit-content'
+                  minW={['10rem', null, '15rem']}
+                  border='1px'
+                  color='#1a202c'
+                  borderColor='gray.300'
+                  bg={data.bg}
+                  shadow='md'
+                  rounded='md'
+                >
                   <Box
                     cursor='pointer'
-                    onClick={() => deleteNote(data._id)}
                     textAlign='right'
                     mr='0.5rem'
                     mt='0.1rem'
+                    onClick={() => handleDelete(data.title)}
                   >
                     x
                   </Box>
-                  <Box px='1rem' pb='1rem'>
+                  <VStack px='1rem' pb='1rem'>
                     <Box
                       fontSize='lg'
+                      wordBreak='break-word'
                       textTransform='uppercase'
                       fontWeight='semibold'
                     >
-                      {data.title}{' '}
+                      {data.title}
                     </Box>
                     <Text minH='4rem' verticalAlign='center' fontWeight='light'>
-                      {data.content}
+                      {data.text}
                     </Text>
-                    <Box fontSize='md' fontWeight='semibold'>
-                      Created by: {data.author}{' '}
-                    </Box>
-                  </Box>
+                    <Text verticalAlign='center' fontWeight='light'>
+                      {data.creation_date}
+                    </Text>
+                  </VStack>
                 </Box>
               );
             })}

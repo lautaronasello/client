@@ -1,19 +1,19 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CreateNote from './components/CreateNote';
-import CreateUser from './components/CreateUser';
 import Navigate from './components/Navigate';
 import NotesList from './components/NotesList';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
+import BtnAddNote from './components/BtnAddNote';
+import theme from './theme';
 function App() {
   return (
     <ChakraProvider>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <Router>
         <Navigate />
         <Route exact path='/' component={NotesList} />
-        <Route exact path='/edit/:id' component={CreateNote} />
-        <Route exact path='/create' component={CreateNote} />
-        <Route exact path='/user' component={CreateUser} />
       </Router>
+      <BtnAddNote />
     </ChakraProvider>
   );
 }
