@@ -54,7 +54,12 @@ export default function ButtonLog() {
           Logout
         </Text>
       ) : (
-        <Text cursor='pointer' onClick={handleLogin}>
+        <Text
+          decoration='underline'
+          _hover={{ textDecoration: 'none' }}
+          cursor='pointer'
+          onClick={handleLogin}
+        >
           Log in
         </Text>
       )}

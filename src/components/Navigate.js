@@ -7,13 +7,11 @@ import {
   Spacer,
   Text,
   useColorMode,
-  MenuItem,
   MenuList,
   MenuButton,
 } from '@chakra-ui/react';
 import { FaSun, FaMoon, FaBars } from 'react-icons/fa';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import firebase from 'firebase';
 import useWindowDimensions from '../useWindowDimensions';
 import ButtonLog from './ButtonLog';
@@ -55,9 +53,7 @@ export default function Navigate() {
         color={isLight ? 'gray.600' : 'whitesmoke'}
         position='fixed'
       >
-        <Link to='/'>
-          <Text fontSize='1.5rem'>NotesApp</Text>
-        </Link>
+        <Text fontSize='1.5rem'>NotesApp</Text>
         <Spacer />
         {width <= 630 && (
           <HStack spacing='1rem'>

@@ -80,7 +80,7 @@ export default function CreateNote(props) {
             title: 'Note created.',
             description: 'Note created successfully :)',
             status: 'info',
-            duration: 9000,
+            duration: 3500,
             isClosable: true,
           });
           setTitle('');
@@ -97,7 +97,16 @@ export default function CreateNote(props) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          writeUserData(name, title, text, userImg);
+          if (userId) writeUserData(name, title, text, userImg);
+          if (!userId)
+            toast({
+              title: 'Log in with google account',
+              description:
+                'You need to log with a google account in menu, to create a note.',
+              isClosable: 'true',
+              duration: '3000',
+              status: 'error',
+            });
         }}
       >
         <VStack spacing='1rem'>

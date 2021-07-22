@@ -20,20 +20,20 @@ export default function BtnAddNote() {
       <Box
         pos='absolute'
         right={['2rem', '5rem']}
-        top='80vh'
-        w='3.5rem'
-        h='3.5rem'
+        top={['75vh', '80vh']}
+        w={['3.5rem', '5rem']}
+        h={['3.5rem', '5rem']}
         bg={bg}
         rounded='full'
         cursor='pointer'
         position='fixed'
-        shadow='dark-lg'
+        shadow='lg'
         _hover={{
-          shadow: '0px 10px 2rem #000001',
+          shadow: 'dark-lg',
         }}
         onClick={onOpen}
       >
-        <Center h='100%'>
+        <Center fontSize={['1rem', '2rem']} h='100%'>
           <FaPlus />
         </Center>
       </Box>

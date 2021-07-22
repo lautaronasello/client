@@ -13,17 +13,17 @@ export default function RadioButton(props) {
       <Box
         {...checkbox}
         cursor='pointer'
-        borderWidth='1px'
+        borderWidth='2px'
         borderRadius='full'
+        borderColor='gray.300'
         w='1.5rem'
         h='1.5rem'
         bg={props.children}
         _checked={{
-          border: '2px solid grey',
+          boxDecorationBreak: 'none',
+          border: '2px solid gray',
         }}
-      >
-        {''}
-      </Box>
+      ></Box>
     </Box>
   );
 }

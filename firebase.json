@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "notes-lautaronasello",
     "public": "build",
     "ignore": [
       "firebase.json",

@@ -49,7 +49,7 @@ export default function NotesList() {
           title: 'Note deleted.',
           description: 'Note deleted successfully',
           status: 'warning',
-          duration: 9000,
+          duration: 2000,
           isClosable: true,
         });
       })
@@ -62,9 +62,11 @@ export default function NotesList() {
 
   if (userId === undefined)
     return (
-      <Center minH='80vh'>
-        Connect your google account to start writing notes
-        <Box mx='1rem'> {<FaGoogle />}</Box>
+      <Center minH='80vh' textAlign='center' p={['1rem', null]}>
+        <VStack spacing='1rem'>
+          <Box mx='1rem'>{<FaGoogle />}</Box>
+          <Box>Connect your google account to start writing notes</Box>
+        </VStack>
       </Center>
     );
 
