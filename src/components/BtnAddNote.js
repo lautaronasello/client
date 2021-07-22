@@ -19,8 +19,8 @@ export default function BtnAddNote() {
     <>
       <Box
         pos='absolute'
-        right='10'
-        top='85vh'
+        right={['2rem', '5rem']}
+        top='80vh'
         w='3.5rem'
         h='3.5rem'
         bg={bg}

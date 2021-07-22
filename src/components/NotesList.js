@@ -91,7 +91,7 @@ export default function NotesList() {
     );
 
   return (
-    <Container align='center' maxW='container.lg' mt='2rem' mb='5rem'>
+    <Container align='center' maxW={'container.lg'} mt='2rem' mb='5rem'>
       <VStack spacing='2rem'>
         <Heading>Notes:</Heading>
         <SimpleGrid columns={[1, 3, null, 4]} gap='1rem'>

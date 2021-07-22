@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import CreateNote from './components/CreateNote';
 import Navigate from './components/Navigate';
 import NotesList from './components/NotesList';
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';

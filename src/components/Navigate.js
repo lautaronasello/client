@@ -50,7 +50,7 @@ export default function Navigate() {
         w='100%'
         minH='4rem'
         align='center'
-        px='5rem'
+        px={['2rem', '5rem']}
         bg={isLight ? 'whitesmoke' : '#1a202c'}
         color={isLight ? 'gray.600' : 'whitesmoke'}
         position='fixed'
@@ -69,13 +69,9 @@ export default function Navigate() {
             />
             <Menu>
               <MenuButton as={IconButton} icon={<FaBars />} />
-              <MenuList>
-                <MenuItem>
-                  <Avatar size='md' name={userName} src={userImg} />
-                </MenuItem>
-                <MenuItem>
-                  <ButtonLog />
-                </MenuItem>
+              <MenuList textAlign='center' style={{ margin: 0 }}>
+                <Avatar m='1rem' size='md' name={userName} src={userImg} />
+                <ButtonLog />
               </MenuList>
             </Menu>
           </HStack>

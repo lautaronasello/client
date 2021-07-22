@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import firebase from 'firebase';
-import { Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 
 export default function ButtonLog() {
   const [user, setUser] = useState();
@@ -43,7 +43,7 @@ export default function ButtonLog() {
   };
 
   return (
-    <div>
+    <Box m='1rem'>
       {user ? (
         <Text
           decoration='underline'
@@ -58,6 +58,6 @@ export default function ButtonLog() {
           Log in
         </Text>
       )}
-    </div>
+    </Box>
   );
 }
